@@ -44,6 +44,7 @@ class LoginRequired extends Module
     {
         if (!$this->context->customer->isLogged()
             && Context::getContext()->controller->php_self != 'authentication'
+            && Context::getContext()->controller->php_self != 'contact'
             && Context::getContext()->controller->php_self != 'password')
         {
             Tools::redirect('index.php?controller=authentication');
