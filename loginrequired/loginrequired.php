@@ -5,6 +5,7 @@ if (!defined('_PS_VERSION_')) {
 
 class LoginRequired extends Module
 {
+    private $excludeRedirectScreens = ['authentication', 'contact', 'password'];
 
     public function __construct()
     {
@@ -42,11 +43,7 @@ class LoginRequired extends Module
      */
     public function hookDisplayHeader()
     {
-        if (!$this->context->customer->isLogged()
-            && Context::getContext()->controller->php_self != 'authentication'
-            && Context::getContext()->controller->php_self != 'contact'
-            && Context::getContext()->controller->php_self != 'password')
-        {
+        if (!$this->context->customer->isLogged() && !in_array(Context::getContext()->controller->php_self, $this->excludeRedirectScreens)) {
             Tools::redirect('index.php?controller=authentication');
         }
     }
